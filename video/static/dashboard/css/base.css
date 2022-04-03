@@ -1,0 +1,45 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+}
+#base-area {
+    width: 100%;
+    position: absolute;
+    height: 100%;
+}
+.navbar{
+    margin-bottom: 0;
+}
+.side-menu{
+    height: 100%;
+    width: 12%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    list-style: None;
+    padding-left: 0;
+}
+h1 {
+    margin: 5%;
+}
+.side-menu > li{
+    text-align: center;
+    width: 100%;
+    line-height: 32px;
+    cursor: pointer;
+    border-left:  1px solid #cccccc;
+    border-top:  1px solid #cccccc;
+    border-bottom:  1px solid #cccccc;
+
+}
+
+.base-content{
+    width: 88%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    right: 0;
+    border-left: 1px solid #cccccc;
+}
