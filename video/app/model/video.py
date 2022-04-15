@@ -72,6 +72,14 @@ class VideoStar(models.Model):
     class Meta:
         unique_together = ('video', 'name', 'identity')
 
+    @property
+    def ident(self):
+        try:
+            result = IdentityType(self.identity)
+        except:
+            return ''
+        return result.label
+
     def __str__(self):
         return self.name
 

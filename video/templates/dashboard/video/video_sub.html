@@ -1,15 +1,44 @@
 <%inherit file="../base.html" />
 <%! from django.shortcuts import reverse%>
-<%! from app.model.video import IdentityType%>
+<%! from app.model.video import  FromType, IdentityType%>
 <%def name="content()">
 <h1>${video.name}<span>${error}</span></h1>
+
+<form id="video-edit-area" class="form-horizontal edit-area add-video-area add-url" action="${reverse('video_star')}"  method="post">${csrf_token}
+    <p>演员与身份编辑区域</p>
+    <label>演员名称</label><input type="text" name="name" class="form-control"><br />
+    <label>身份</label>
+    <select class="form-control" name="identity">
+        %for identity in IdentityType:
+        <option value="${identity.value}">${identity.label}</option>
+        %endfor
+    </select>
+    <input type="hidden" value="${video.id}" name="video_id" />
+    <input type="submit" value="添加" class="btn btn-info" id="add-star-btn">
+
+</form>
+% if FromType(video.from_to) == FromType.custom:
+<form enctype="multipart/form-data" id="video-edit-area" class="form-horizontal edit-area add-video-area add-url" method="post">${csrf_token}
+% else:
+<form id="video-edit-area" class="form-horizontal edit-area add-video-area add-url" method="post">${csrf_token}
+% endif
+    <p>地址与选集编辑区域</p>
+    % if FromType(video.from_to) != FromType.custom:
+    <label>添加地址</label><input id="url" type="text" name="url" class="form-control"><br />
+    % else:
+    <label>添加地址</label><input id="url" type="file" name="url" class="form-control"><br />
+    % endif
+    <label>添加集数</label><input id="number" type="number" name="number" class="form-control">
+    <input type="hidden" value="" name="videosub_id" id="videosub-input-id"/>
+    <input type="submit" value="添加" class="btn btn-info" id="add-url-btn">
+</form>
 
 <table class="table">
     <thead>
     <tr>
         <th>集数</th>
         <th>地址</th>
-        <th>预览</th>
+        <th>控制</th>
 
     </tr>
     </thead>
@@ -18,8 +47,11 @@
         %for video_sub in video.video_sub.all():
         <tr>
             <td>第${video_sub.number}集</td>
-            <td>${video_sub.url}</td>
-            <td><a href="${video_sub.url}">查看</a></td>
+            <td><p class="info">${video_sub.url}</p></td>
+            <td><a class="btn btn-default" target="_blank" href="${video_sub.url}">查看</a>
+                <button class="btn btn-default update-btn"  data-id="${video_sub.id}" data-url="${video_sub.url}" data-number="${video_sub.number}">编辑</button>
+                <a class="btn btn-default" href="${reverse('sub_delete', kwargs={'videosub_id': video_sub.id, 'video_id': video.id})}">删除</a>
+            </td>
 
         </tr>
         % endfor
@@ -27,7 +59,7 @@
     </tbody>
 </table>
 
-<h2>演员</h2>
+<h2>演员</h2><text>（点击可删除）</text>
 <ul>
     %for video_star in video.video_star.all():
     <li><a href="${reverse('star_delete',
@@ -41,27 +73,16 @@
 
 
 
-<form id="video-edit-area" class="form-horizontal edit-area add-video-area add-url" method="post">${csrf_token}
-    <label>添加地址</label><input type="text" name="url" class="form-control">
-    <input type="submit" value="添加" class="btn btn-info" id="add-url-btn">
-</form>
 
 
-<form id="video-edit-area" class="form-horizontal edit-area add-video-area add-url" action="${reverse('video_star')}"  method="post">${csrf_token}
-    <label>演员名称</label><input type="text" name="name" class="form-control"><br />
-    <label>身份</label>
-    <select class="form-control" name="identity">
-        %for identity in IdentityType:
-        <option value="${identity.value}">${identity.label}</option>
-        %endfor
-    </select>
-    <input type="hidden" value="${video.id}" name="video_id" />
-    <input type="submit" value="添加" class="btn btn-info" id="add-star-btn">
 
-</form>
+
 
 </%def>
 
 <%def name="css()">
 <link href="/static/dashboard/css/video_sub.css" rel="stylesheet"/>
+</%def>
+<%def name="js()">
+<script src="/static/dashboard/js/video/video_sub.js"></script>
 </%def>

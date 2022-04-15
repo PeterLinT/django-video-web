@@ -23,3 +23,12 @@
     white-space: nowrap;
     text-overflow: ellipsis;
 }
+.lpttext{
+    word-spacing: 25px;
+}
+.lpttext1{
+    width: 100% ;
+}
+#custom-h3{
+    margin-top: 100px;
+}

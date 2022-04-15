@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>${self.title()}</title>
+    <meta name="viewport" content="initial-scale=1,maxmum-scale=3,minimum-scale=1,user-scalable=no"/>
+    <link href="/static/client/css/base.css" rel="stylesheet" />
+    ${self.css()}
+</head>
+<body>
+<%! from django.shortcuts import reverse %>
+<header>导航</header>
+<div class="base-content">
+    ${self.content()}
+</div>
+<footer>
+    <ul>
+        <li><a href="${reverse('client_ex_video')}">外链</a></li>
+        <li><a href="${reverse('client_cus_video')}">内链</a></li>
+        <li><a href="${reverse('client_auth')}">我的</a></li>
+    </ul>
+</footer>
+
+</body>
+<script src="/static/dashboard/js/jquery-1.12.4.min.js"></script>
+${self.js()}
+
+</html>
+<%def name="title()"></%def>
+<%def name="js()"></%def>
+<%def name="css()"></%def>
+<%def name="content()"></%def>

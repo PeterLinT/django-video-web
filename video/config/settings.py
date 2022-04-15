@@ -35,7 +35,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'app'
+    'app',
+
 ]
 
 MIDDLEWARE = [
@@ -118,3 +119,8 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static'), ]
+
+QINIU_AK = 'i69NoZNvRQ0rFzcw0jdkMGUzhPk_Q4iRYIZu3M4x'
+QINIU_SK = 'cv0iBngbojrtyckaGcjaYhlAi1FYusEJ2ncEx-bQ'
+QINIU_VIDEO = 'video-forlpt'
+QINIU_VIDEO_URL = 'r9v3bcv79.hb-bkt.clouddn.com'

@@ -1,12 +1,37 @@
-input , select{
+input, select {
     width: 50% !important;
     display: inline-block !important;
 }
-.add-url{
+
+.add-url {
     width: 50%;
     padding: 10px;
     border: 1px solid #cccccc;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    margin-left: 20px;
 }
+
 #add-url-btn, #add-star-btn {
     width: 70px !important;
+}
+
+p {
+    font-size: 20px ;
+    font-weight: 700 ;
+}
+.info{
+    width: 100px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    font-style: normal;
+    font-size: 16px;
+    font-weight: 500 ;
+}
+li{
+    display: inline-block;
+}
+h2{
+    display: inline-block;
 }

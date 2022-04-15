@@ -1,0 +1,65 @@
+<%inherit file="../base.html"/>
+<%def name="content()">
+<%
+from django.shortcuts import reverse
+from app.model.video import FromType
+from app.utils.permission import client_auth
+%>
+<img src="${video.image}" class="video-image"/>
+<div class="date">
+    <p><span class="span">名称:</span>${video.name}</p>
+    <p>
+        <span class="span">演员:</span>
+        <ul>
+        % for man in video.video_star.all():
+        <li>${man.name}:${man.ident}</li>
+    %endfor
+</ul>
+    </p>
+    <p>
+        <span class="span">简介:</span><br/>
+        <span class="info">${video.info}</span>
+    </p>
+    <p>
+        <span class="span">选集:</span><br>
+    % if FromType(video.from_to) == FromType.custom and not client_auth(request):
+    <a href="${reverse('client_auth')}">请您登录</a>
+    %else:
+        <ul class="number-ul">
+
+    % for data in video.video_sub.all():
+    <li><a href="${data.url}" target="_blank">第${data.number}集</a> </li>
+    % endfor
+</ul>
+    %endif
+    </p>
+    <p>
+        <span class="span">评论区域</span>
+        <div class="comment-area">
+    % if user:
+    <textarea id="comment-content"></textarea>${csrf_token}
+    <button id="comment-submit" data-user-id="${user.id}" data-url="${reverse('client_add_comment')}" data-video-id="${video.id}">提交</button>
+    % else:
+    <p><a href="${reverse('client_auth')}">登录后可评论</a></p>
+    %endif
+</div>
+    </p>
+    <div class="comment-show-area">
+        <span class="span" >评论展示</span>
+        <ul >
+    % for comment in comments:
+    <li>
+        <span>${comment.content}</span>
+        <span>${comment.user.username}</span>
+    </li>
+    % endfor
+</ul>
+    </div>
+</div>
+</%def>
+<%def name="css()">
+<link href="/static/client/css/video_sub.css" rel="stylesheet"/>
+</%def>
+<%def name="js()">
+<script src="/static/client/js/video_sub.js"></script>
+</%def>
